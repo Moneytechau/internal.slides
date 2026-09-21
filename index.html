@@ -72,7 +72,7 @@
   }
   .grid {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 12px;
   }
   .cell {
@@ -118,7 +118,6 @@
     <div class="cell"><div class="num" id="days">--</div><div class="label">Days</div></div>
     <div class="cell"><div class="num" id="hours">--</div><div class="label">Hours</div></div>
     <div class="cell"><div class="num" id="minutes">--</div><div class="label">Minutes</div></div>
-    <div class="cell"><div class="num" id="seconds">--</div><div class="label">Seconds</div></div>
   </div>
 
   <p class="target" id="targetLabel"></p>
@@ -126,43 +125,17 @@
 
 <script>
   var target = new Date("2026-10-26T00:00:00");
+  var diff = target.getTime() - Date.now();
+  var pad = function (n) { return String(n).padStart(2, "0"); };
 
-  var elDays = document.getElementById("days");
-  var elHours = document.getElementById("hours");
-  var elMinutes = document.getElementById("minutes");
-  var elSeconds = document.getElementById("seconds");
-  var elTargetLabel = document.getElementById("targetLabel");
-  var wrap = document.querySelector(".wrap");
-
-  elTargetLabel.textContent = "Launching " + target.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
-
-  function pad(n) {
-    return String(n).padStart(2, "0");
+  if (diff <= 0) {
+    document.querySelector(".wrap").innerHTML = '<p class="eyebrow">Overdraft</p><div class="done">We are live</div>';
+  } else {
+    document.getElementById("days").textContent = Math.floor(diff / 86400000);
+    document.getElementById("hours").textContent = pad(Math.floor(diff / 3600000) % 24);
+    document.getElementById("minutes").textContent = pad(Math.floor(diff / 60000) % 60);
+    document.getElementById("targetLabel").textContent = "Launching " + target.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
   }
-
-  function tick() {
-    var now = new Date();
-    var diff = target.getTime() - now.getTime();
-
-    if (diff <= 0) {
-      wrap.innerHTML = '<p class="eyebrow">Overdraft</p><div class="done">We are live</div>';
-      clearInterval(timer);
-      return;
-    }
-
-    var days = Math.floor(diff / (1000 * 60 * 60 * 24));
-    var hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-    var minutes = Math.floor((diff / (1000 * 60)) % 60);
-    var seconds = Math.floor((diff / 1000) % 60);
-
-    elDays.textContent = days;
-    elHours.textContent = pad(hours);
-    elMinutes.textContent = pad(minutes);
-    elSeconds.textContent = pad(seconds);
-  }
-
-  tick();
-  var timer = setInterval(tick, 1000);
 </script>
 
 </body>
