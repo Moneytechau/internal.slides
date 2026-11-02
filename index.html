@@ -113,30 +113,8 @@
   <p class="eyebrow">New product coming</p>
   <h1>Overdraft is launching soon</h1>
   <p class="sub">Pushing to launch as soon as possible</p>
-
-  <!-- <div id="countdown" class="grid">
-    <div class="cell"><div class="num" id="days">--</div><div class="label">Days</div></div>
-    <div class="cell"><div class="num" id="hours">--</div><div class="label">Hours</div></div>
-    <div class="cell"><div class="num" id="minutes">--</div><div class="label">Minutes</div></div>
-  </div>
-
-  <p class="target" id="targetLabel"></p> -->
+  
 </div>
-
-<script>
-  var target = new Date("2026-11-03T00:00:00");
-  var diff = target.getTime() - Date.now();
-  var pad = function (n) { return String(n).padStart(2, "0"); };
-
-  if (diff <= 0) {
-    document.querySelector(".wrap").innerHTML = '<p class="eyebrow">Overdraft</p><div class="done">We are live</div>';
-  } else {
-    document.getElementById("days").textContent = Math.floor(diff / 86400000);
-    document.getElementById("hours").textContent = pad(Math.floor(diff / 3600000) % 24);
-    document.getElementById("minutes").textContent = pad(Math.floor(diff / 60000) % 60);
-    document.getElementById("targetLabel").textContent = "Launching " + target.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
-  }
-</script>
 
 </body>
 </html>
